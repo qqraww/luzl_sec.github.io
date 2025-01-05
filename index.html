@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра "Мита: 3 в ряд"</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #fefaf6;
+            color: #4a4a4a;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background: #ffd1dc;
+            color: #4a4a4a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+        }
+
+        .game-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .game-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .description {
+            text-align: center;
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+
+        .download-button {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: #ffffff;
+            background-color: #ff6f91;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .download-button:hover {
+            background-color: #ff4f78;
+            transform: scale(1.05);
+        }
+
+        .screenshots {
+            margin-top: 20px;
+        }
+
+        .screenshots h2 {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .screenshots img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #ffd1dc;
+            color: #4a4a4a;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .download-button {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+
+            .screenshots img {
+                border-radius: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Мита: 3 в ряд</h1>
+    </header>
+    <div class="container">
+        <div class="game-header">
+            <img src="icon.jpg" alt="Иконка игры Мита" class="game-icon">
+            <p>Автор: LuzlSec</p>
+        </div>
+        <div class="description">
+            <p>Помогите Мите пройти увлекательные уровни и решать головоломки в новой захватывающей игре!</p>
+        </div>
+        <a href="https://t.me/+kBVvA470viY5OGMy" class="download-button">Скачать игру</a>
+        <section class="screenshots">
+            <h2>Скриншоты игры</h2>
+            <img src="screenshot1.jpg" alt="Красочный уровень игры">
+            <img src="screenshot2.jpg" alt="Мита решает головоломку">
+            <img src="screenshot3.jpg" alt="Награды за победу">
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2025 Miside Studios. Все права защищены.</p>
+    </footer>
+</body>
+</html>
