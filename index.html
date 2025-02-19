@@ -1,154 +1,507 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Игра "Мита: 3 в ряд"</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', Arial, sans-serif;
-            background-color: #fefaf6;
-            color: #4a4a4a;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luzl Sec | Dark Marketplace</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #00ff88;
+      --secondary: #7b61ff;
+      --accent: #ff4d4d;
+      --bg-dark: #0a0a0a;
+      --bg-light: #1a1a1a;
+      --text: #ffffff;
+      --text-light: rgba(255, 255, 255, 0.8);
+    }
 
-        header {
-            text-align: center;
-            padding: 20px;
-            background: #ffd1dc;
-            color: #4a4a4a;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            font-weight: 700;
-        }
+    body {
+      font-family: 'Urbanist', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
-        }
+    .parallax-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: -1;
+      background: linear-gradient(45deg, 
+        rgba(11, 11, 11, 0.95) 0%,
+        rgba(23, 23, 23, 0.85) 100%),
+        url('https://assets.codepen.io/4625073/noise.png');
+    }
 
-        .game-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 5%;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .game-icon {
-            width: 100px;
-            height: 100px;
-            border-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+    .header-scrolled {
+      padding: 1rem 5%;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
 
-        .description {
-            text-align: center;
-            font-size: 1.2em;
-            margin: 20px 0;
-        }
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.3));
+    }
 
-        .download-button {
-            display: block;
-            margin: 20px auto;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            color: #ffffff;
-            background-color: #ff6f91;
-            border: none;
-            border-radius: 30px;
-            text-decoration: none;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, transform 0.2s;
-        }
+    .nav-menu {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
 
-        .download-button:hover {
-            background-color: #ff4f78;
-            transform: scale(1.05);
-        }
+    .nav-link {
+      position: relative;
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      transition: 0.3s;
+    }
 
-        .screenshots {
-            margin-top: 20px;
-        }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .screenshots h2 {
-            text-align: center;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
+    .nav-link:hover::after {
+      width: 100%;
+    }
 
-        .screenshots img {
-            width: 100%;
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+    .add-product-btn {
+      background: var(--primary);
+      color: var(--bg-dark);
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-        footer {
-            text-align: center;
-            padding: 10px;
-            background: #ffd1dc;
-            color: #4a4a4a;
-            margin-top: 20px;
-            font-size: 0.9em;
-        }
+    .add-product-btn:hover {
+      background: var(--secondary);
+    }
 
-        footer p {
-            margin: 0;
-        }
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1000px;
+      text-align: center;
+    }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
+    .hero-content {
+      transform-style: preserve-3d;
+    }
 
-            header h1 {
-                font-size: 2em;
-            }
+    .hero-title {
+      font-size: 5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateZ(50px);
+      animation: fadeInUp 1s forwards 0.5s;
+    }
 
-            .download-button {
-                padding: 12px 25px;
-                font-size: 1em;
-            }
+    .hero-subtitle {
+      font-size: 1.5rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeInUp 1s forwards 0.8s;
+    }
 
-            .screenshots img {
-                border-radius: 10px;
-            }
-        }
-    </style>
+    .sort-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .sort-buttons button {
+      background: var(--primary);
+      color: var(--bg-dark);
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .sort-buttons button:hover {
+      background: var(--secondary);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 4rem 5%;
+    }
+
+    .product-card {
+      background: var(--bg-light);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: 0.4s;
+    }
+
+    .product-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .product-info {
+      padding: 1.5rem;
+    }
+
+    .seller-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .seller-avatar {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 20%;
+    }
+
+    .seller-name {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .product-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-description {
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    .product-price {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .buy-btn {
+      background: var(--primary);
+      color: var(--bg-dark);
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .buy-btn:hover {
+      background: var(--secondary);
+    }
+
+    .reviews-section {
+      padding: 4rem 5%;
+      background: var(--bg-light);
+      margin-top: 4rem;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .review-card {
+      background: var(--bg-dark);
+      padding: 1.5rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .review-author img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .review-author-name {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .review-text {
+      color: var(--text-light);
+    }
+
+    footer {
+      padding: 2rem 5%;
+      background: var(--bg-light);
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .footer-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .footer-link:hover {
+      color: var(--secondary);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-title {
+        font-size: 3.5rem;
+      }
+      
+      .nav-menu {
+        display: none;
+      }
+      
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 50px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--primary), var(--secondary));
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Мита: 3 в ряд</h1>
-    </header>
-    <div class="container">
-        <div class="game-header">
-            <img src="icon.jpg" alt="Иконка игры Мита" class="game-icon">
-            <p>Автор: LuzlSec</p>
-        </div>
-        <div class="description">
-            <p>Помогите Мите пройти увлекательные уровни и решать головоломки в новой захватывающей игре!</p>
-        </div>
-        <a href="https://t.me/+kBVvA470viY5OGMy" class="download-button">Скачать игру</a>
-        <section class="screenshots">
-            <h2>Скриншоты игры</h2>
-            <img src="screenshot1.jpg" alt="Красочный уровень игры">
-            <img src="screenshot2.jpg" alt="Мита решает головоломку">
-            <img src="screenshot3.jpg" alt="Награды за победу">
-        </section>
+  <div class="parallax-bg"></div>
+
+  <header id="mainHeader">
+    <div class="logo">Luzl Sec</div>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#" class="nav-link">Home</a></li>
+        <li><a href="#" class="nav-link">Products</a></li>
+        <li><a href="#" class="nav-link">Sellers</a></li>
+        <li><a href="#" class="nav-link">Support</a></li>
+      </ul>
+    </nav>
+    <button class="add-product-btn" onclick="window.location.href='https://t.me/smert_velkia'">Выложить товар</button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Luzl Sec</h1>
+      <p class="hero-subtitle">Your gateway to exclusive products.</p>
+      <div class="sort-buttons">
+        <button onclick="sortProductsByPrice('asc')">Sort by Price (Low to High)</button>
+        <button onclick="sortProductsByPrice('desc')">Sort by Price (High to Low)</button>
+      </div>
     </div>
-    <footer>
-        <p>&copy; 2025 Miside Studios. Все права защищены.</p>
-    </footer>
+  </section>
+
+  <section class="products-grid">
+    <!-- Товары будут добавлены через JavaScript -->
+  </section>
+
+  <section class="reviews-section">
+    <h2>Отзывы</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-author">
+          <img src="sasha.jpg" alt="Review Author">
+          <span class="review-author-name">Саша</span>
+        </div>
+        <p class="review-text">Отличный сервис! Быстро и качественно.</p>
+      </div>
+      <div class="review-card">
+        <div class="review-author">
+          <img src="talib.jpg" alt="Review Author">
+          <span class="review-author-name">Талиб</span>
+        </div>
+        <p class="review-text">Все понравилось, рекомендую!</p>
+      </div>
+      <div class="review-card">
+        <div class="review-author">
+          <img src="ernan.jpg" alt="Review Author">
+          <span class="review-author-name">Эрнан</span>
+        </div>
+        <p class="review-text">Лучший маркетплейс в своей нише.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Присоединяйтесь к нашей <a href="https://t.me/+oZ_wj8Gd0V1kMmQy" class="footer-link">Telegram-группе</a> для обсуждений и поддержки.</p>
+  </footer>
+
+<script>
+  // Анимация хедера
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('mainHeader');
+    header.classList.toggle('header-scrolled', window.scrollY > 100);
+  });
+
+  // Данные о товарах
+  const products = [
+    {
+      id: 1,
+      seller: {
+        name: "Kalin",
+        avatar: "kalin.jpg",
+        telegram: "https://t.me/Gogkfehnvijn"
+      },
+      title: "Аренда номера WhatsApp",
+      description: "Арендую ваш номер для рассылки спама в мессенджере. Почасовая оплата.",
+      price: 7.74,
+      image: "whatsapp_spam.jpg"
+    },
+    {
+      id: 2,
+      seller: {
+        name: "Project Konstanta",
+        avatar: "konstanta.jpg",
+        telegram: "https://t.me/Constanta_priority"
+      },
+      title: "Розыск, Разведка, Безопасность",
+      description: "Мы - команда экспертов в области кибербезопасности и анонимности. Мы проводим платные консультации по: Цифровой безопасности и гигиене. Анонимности и поиску анонимных преступников. Юридическим вопросам ОРМ и наружному наблюдению. Поиску людей и скрытию информации. Атакам типа DDoS и внедрению в компании ПТСР, СДВГ, зависимости и кризисным ситуациям. Наши адвокаты и юристы на связи 24/7.",
+      price: 299,
+      image: "konst.jpg"
+    },
+    {
+      id: 3,
+      seller: {
+        name: "Serabi",
+        avatar: "serabi.jpg",
+        telegram: "https://t.me/amirald_dos"
+      },
+      title: "Продам сносер Telegram",
+      description: "Сносеры работают на архивах. Оплата каждый месяц.В архиве есть лог на активацию жалоб/спама с аккаунтов Telegram.",
+      price: 20,
+      image: "snoser.jpg"
+    }
+  ];
+
+  // Функция для отображения товаров
+  function displayProducts(products) {
+    const productsGrid = document.querySelector('.products-grid');
+    productsGrid.innerHTML = '';
+    products.forEach(product => {
+      const productCard = document.createElement('div');
+      productCard.classList.add('product-card');
+      productCard.innerHTML = `
+        <img src="${product.image}" alt="Product Image">
+        <div class="product-info">
+          <div class="seller-info">
+            <img src="${product.seller.avatar}" alt="Seller Avatar" class="seller-avatar">
+            <span class="seller-name">${product.seller.name}</span>
+          </div>
+          <h3 class="product-title">${product.title}</h3>
+          <p class="product-description">${product.description}</p>
+          <p class="product-price">$${product.price.toFixed(2)}</p>
+          <a href="${product.seller.telegram}" target="_blank" class="buy-btn">Обратиться</a>
+        </div>
+      `;
+      productsGrid.appendChild(productCard);
+    });
+  }
+
+  // Сортировка товаров по цене
+  function sortProductsByPrice(order) {
+    const sortedProducts = products.sort((a, b) => order === 'asc' ? a.price - b.price : b.price - a.price);
+    displayProducts(sortedProducts);
+  }
+
+  // Инициализация
+  displayProducts(products);
+</script>
+
+<!-- Подключение шрифтов -->
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;500;800&display=swap" rel="stylesheet">
 </body>
 </html>
